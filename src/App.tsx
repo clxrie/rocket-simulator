@@ -5,6 +5,8 @@ import FuelBar from "./components/gauges/FuelBar"
 import AngleDisplay from "./components/gauges/AngleDisplay"
 import FlightChart from "./components/charts/FlightChart"
 import ConnectionStatus from "./components/status/ConnectionStatus"
+import MissionTimer from "./components/status/MissionTimer"
+import MissionStatus from "./components/status/MissionStatus"
 
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
       <AngleDisplay D={flightData[150].D} />
       <FlightChart />
       <ConnectionStatus connected={true} />
+      <MissionTimer />
+      <MissionStatus V={flightData[300].V} F={flightData[300].F} />
     </div>
   )
 }
