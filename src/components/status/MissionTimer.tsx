@@ -19,7 +19,8 @@ function MissionTimer(){
 
     return(
             <div>
-                {formatTime()}
+                <p className="text-[9px] text-[#3a5a3a] text-right tracking-[0.1em]">MISSION ELAPSED</p>
+                <p className="text-3xl font-light text-[#66ff99] tracking-wider">{formatTime()}</p>
             </div>
     );
 }

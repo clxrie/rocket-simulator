@@ -11,16 +11,35 @@ import useFakePlayback from "./hooks/useFakePlayback"
 export default function App() {
   const currentData = useFakePlayback()
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
-      <h1 className="text-2xl font-bold">Mission Control</h1>
+    <div className="min-h-screen bg-[#0a0e0a] text-[#d4e8d4] p-4">
+
+
+  <div className="flex justify-between items-center pb-3 mb-3 border-b border-[#1a2e1a]">
+    <div>
+      <span className="text-4xl tracking-[0.15em] text-white">ROCKETSIM</span>
+    </div>
+    <ConnectionStatus connected={true} />
+    <MissionTimer />
+  </div>
+
+  
+  <div className="grid grid-cols-4 gap-3">
+    <div className="col-span-3 border border-[#1a2e1a] bg-[#0d120d] p-4">
+      <FlightChart />
+    </div>
+    <div className="flex flex-col gap-3">
       <AltitudeGauge H={currentData.H} />
       <VelocityGauge V={currentData.V} />
-      <FuelBar F = {currentData.F}/>
+      <FuelBar F={currentData.F} />
       <AngleDisplay D={currentData.D} />
-      <FlightChart />
-      <ConnectionStatus connected={true} />
-      <MissionTimer />
-      <MissionStatus V={currentData.V} F={currentData.F} />
     </div>
+  </div>
+
+  
+  <div className="mt-3 pt-3 border-t border-[#1a2e1a]">
+    <MissionStatus V={currentData.V} F={currentData.F} />
+  </div>
+
+</div>
   )
 }

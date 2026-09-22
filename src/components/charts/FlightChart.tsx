@@ -4,15 +4,36 @@ import { flightData } from '../../data/fakeFlight'
 function FlightChart(){
 
     return(
-        <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={flightData}>
-                <XAxis dataKey="time"/>
-                <YAxis />
-                <CartesianGrid />
-                <Tooltip />
-                <Line dataKey="H" stroke="#22c55e" dot={false} />
-            </LineChart>
-        </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height={400}>
+  <LineChart data={flightData}>
+    <CartesianGrid stroke="#1a2e1a" strokeWidth={0.5} />
+    <XAxis 
+      dataKey="time" 
+      stroke="#1a2e1a"
+      tick={{ fill: '#3a5a3a', fontSize: 9, fontFamily: 'JetBrains Mono' }}
+    />
+    <YAxis 
+      stroke="#1a2e1a"
+      tick={{ fill: '#3a5a3a', fontSize: 9, fontFamily: 'JetBrains Mono' }}
+    />
+    <Tooltip 
+      contentStyle={{ 
+        backgroundColor: '#111811', 
+        border: '1px solid #2a4a2a',
+        fontFamily: 'JetBrains Mono',
+        fontSize: 11,
+        color: '#66ff99'
+      }}
+    />
+    <Line 
+      dataKey="H" 
+      stroke="#3ddc84" 
+      strokeWidth={1.5}
+      dot={false} 
+      type="monotone"
+    />
+  </LineChart>
+</ResponsiveContainer>
     );
 }
 export default FlightChart
