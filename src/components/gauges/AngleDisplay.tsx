@@ -1,5 +1,4 @@
-function AngleDisplay({D}: {D: [number, number, number]}) {
-  const angle = Math.atan2(D[0], D[1]) * (180 / Math.PI)
+function AngleDisplay({angle}: {angle: number}) {
 
   return (
     <div className="border border-[#1a2e1a] bg-[#111811] p-4">

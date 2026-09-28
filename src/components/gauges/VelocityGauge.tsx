@@ -5,7 +5,7 @@ function VelocityGauge({V} : {V: number}){
             <p className="text-[9px] text-[#6a8a6a] tracking-[0.1em] mb-1">VELOCITY</p>
             <p className="text-3xl font-bold text-[#66ff99]">
             {V.toLocaleString(undefined, {maximumFractionDigits: 0})}
-            <span className="text-sm font-normal text-[#6a8a6a] ml-1">m</span>
+            <span className="text-sm font-normal text-[#6a8a6a] ml-1">m/s</span>
             </p>
         </div>
     );

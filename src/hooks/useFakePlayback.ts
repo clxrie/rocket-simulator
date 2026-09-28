@@ -12,8 +12,15 @@ function useFakePlayback(){
         
             return() => clearInterval(intervalID);
         }, []);
+        const point = flightData[index]
 
-        return(flightData[index]);
+        return {
+        H: point.H,
+        V: point.V,
+        F: point.F,
+        angle: Math.atan2(point.D[0], point.D[1]) * (180 / Math.PI),
+        distance: 0
+        }
         
         
 }

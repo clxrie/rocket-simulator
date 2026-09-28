@@ -1,11 +1,9 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { flightData } from '../../data/fakeFlight'
-
-function FlightChart(){
+function FlightChart({history}: {history: {time: number, H: number}[]}) {
 
     return(
         <ResponsiveContainer width="100%" height={400}>
-  <LineChart data={flightData}>
+  <LineChart data={history}>
     <CartesianGrid stroke="#1a2e1a" strokeWidth={0.5} />
     <XAxis 
       dataKey="time" 
