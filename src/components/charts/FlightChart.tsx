@@ -1,15 +1,22 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-function FlightChart({history}: {history: {time: number, H: number}[]}) {
+type Props = {
+  history: Record<string, number>[]
+  dataKey: string
+  height?: number
+}
+
+function FlightChart({ history, dataKey, height = 400 }: Props) {
 
     return(
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={height}>
   <LineChart data={history}>
     <CartesianGrid stroke="#1a2e1a" strokeWidth={0.5} />
-    <XAxis 
-      dataKey="time" 
+    <XAxis
+      dataKey="time"
+      minTickGap={40}
       stroke="#1a2e1a"
       tick={{ fill: '#3a5a3a', fontSize: 9, fontFamily: 'JetBrains Mono' }}
-    />
+  />
     <YAxis 
       stroke="#1a2e1a"
       tick={{ fill: '#3a5a3a', fontSize: 9, fontFamily: 'JetBrains Mono' }}
@@ -24,7 +31,7 @@ function FlightChart({history}: {history: {time: number, H: number}[]}) {
       }}
     />
     <Line 
-      dataKey="H" 
+      dataKey={dataKey}
       stroke="#3ddc84" 
       strokeWidth={1.5}
       dot={false} 
