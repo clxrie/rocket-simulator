@@ -2,21 +2,25 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 type Props = {
   history: Record<string, number>[]
   dataKey: string
+  xKey?: string
   height?: number
 }
 
-function FlightChart({ history, dataKey, height = 400 }: Props) {
+function FlightChart({ history, dataKey, xKey = "time", height = 400 }: Props) {
 
     return(
         <ResponsiveContainer width="100%" height={height}>
   <LineChart data={history}>
     <CartesianGrid stroke="#1a2e1a" strokeWidth={0.5} />
     <XAxis
-      dataKey="time"
-      minTickGap={40}
-      stroke="#1a2e1a"
-      tick={{ fill: '#3a5a3a', fontSize: 9, fontFamily: 'JetBrains Mono' }}
-  />
+  dataKey={xKey}
+  type="number"
+  domain={['dataMin', 'dataMax']}
+  tickFormatter={(v) => Math.round(v).toString()}
+  minTickGap={40}
+  stroke="#1a2e1a"
+  tick={{ fill: '#3a5a3a', fontSize: 9, fontFamily: 'JetBrains Mono' }}
+/>
     <YAxis 
       stroke="#1a2e1a"
       tick={{ fill: '#3a5a3a', fontSize: 9, fontFamily: 'JetBrains Mono' }}

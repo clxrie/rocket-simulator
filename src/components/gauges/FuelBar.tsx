@@ -1,5 +1,5 @@
-function FuelBar({F}: {F: number}) {
-  const percentage = (F / 393260) * 100
+function FuelBar({ percent }: { percent: number }) {
+  const percentage = Math.min(100, Math.max(0, percent))
 
   const barColor = percentage < 20 
     ? "bg-red-500 shadow-[0_0_6px_#ff4444]" 

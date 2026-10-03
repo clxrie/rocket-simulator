@@ -1,2 +1,14 @@
 @import "tailwindcss";
 body { font-family: 'JetBrains Mono', monospace; }
+
+@keyframes flicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); opacity: 0.9; }
+  25% { transform: scaleY(1.15) scaleX(0.9); opacity: 1; }
+  50% { transform: scaleY(0.9) scaleX(1.05); opacity: 0.8; }
+  75% { transform: scaleY(1.1) scaleX(0.95); opacity: 1; }
+}
+
+.flame {
+  animation: flicker 0.15s infinite;
+  transform-origin: top center;
+}

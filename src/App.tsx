@@ -9,16 +9,24 @@ import MissionTimer from "./components/status/MissionTimer"
 import MissionStatus from "./components/status/MissionStatus"
 import useFakePlayback from "./hooks/useFakePlayback"
 import useRocketData from "./hooks/useRocketData"
+import RocketVisual from "./components/gauges/RocketVisual"
 
 
+const EMPTY = { H: 0, V: 0, F: 0, fuelPct: 0, angle: 0, distance: 0 }
 export default function App() {
   const [flightLog, setFlightLog] = useState<any[]>([])
-  const fake = useFakePlayback();
-  const live = useRocketData();
-  const currentData = live.connected && live.data ? live.data : fake
+  const [mode, setMode] = useState<'live' | 'replay'>(import.meta.env.DEV ? 'live' : 'replay')
+  const fake = useFakePlayback()
+  const live = useRocketData(mode === 'live')
+  const currentData = mode === 'live' ? (live.data ?? EMPTY) : fake
 
   useEffect(() => {
-  setFlightLog(p => [...p, { ...currentData, time: p.length }])
+  setFlightLog([])
+  }, [mode])
+
+  useEffect(() => {
+    if (currentData === EMPTY) return
+    setFlightLog(prev => [...prev, { ...currentData, time: prev.length }])
   }, [currentData])
 
   function downloadLog() {
@@ -47,22 +55,40 @@ return (
         >
           DOWNLOAD FLIGHT LOG
         </button>
+        <button
+        onClick={() => setMode(m => (m === 'live' ? 'replay' : 'live'))}
+        className="border border-[#2a4a2a] text-[#3ddc84] text-[10px] tracking-[0.1em] px-3 py-2 hover:bg-[#1a2e1a]"
+      >
+        {mode === 'live' ? 'MODE: LIVE' : 'MODE: REPLAY'}
+      </button>
       </div>
     </header>
+    
+    {mode === 'live' && !live.connected && (
+      <div className="border border-[#5a2a2a] bg-[#1a0d0d] text-[#ff6b6b] text-[11px] tracking-[0.2em] px-4 py-2 animate-pulse">
+        ⚠ NO SIGNAL — RECONNECTING TO VEHICLE...
+      </div>
+    )}
+    
 
    
     <main className="grid grid-cols-4 gap-3">
       <section className={`${panel} row-span-2 flex flex-col overflow-hidden`}>
           <p className={label}>VEHICLE</p>
           <div className="flex-1 min-h-0 flex items-center justify-center">
-            <img src="/rocket.png" alt="Rocket" className="max-h-[520px] w-full object-contain opacity-90" />
+            <RocketVisual burning={currentData.fuelPct > 0.5} />
           </div>
       </section>
       
 
       <section className={`${panel} col-span-3`}>
-          <p className={label}>ALTITUDE (m)</p>
-          <FlightChart history={flightLog} dataKey="H" height={260} />
+          <p className={label}>{mode === 'live' ? 'FLIGHT PATH (altitude vs distance, m)' : 'ALTITUDE (m)'}</p>
+        <FlightChart
+          history={flightLog}
+          dataKey="H"
+          xKey={mode === 'live' ? 'distance' : 'time'}
+          height={320}
+        />
       </section>
 
       <div className="col-span-3 grid grid-cols-2 gap-3">
@@ -81,7 +107,7 @@ return (
     <section className="grid grid-cols-4 gap-3">
       <AltitudeGauge H={currentData.H} />
       <VelocityGauge V={currentData.V} />
-      <FuelBar F={currentData.F} />
+      <FuelBar percent={currentData.fuelPct} />
       <AngleDisplay angle={currentData.angle} />
     </section>
 

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { flightData } from "../data/fakeFlight";
+import { flightData, INITIAL_FUEL } from "../data/fakeFlight";
 
 function useFakePlayback() {
   const [index, setIndex] = useState(0);
@@ -18,6 +18,7 @@ function useFakePlayback() {
       V: point.V,
       F: point.F,
       angle: Math.atan2(point.D[0], point.D[1]) * (180 / Math.PI),
+      fuelPct: (point.F / INITIAL_FUEL) * 100,
       distance: 0,
     };
   }, [index]);
