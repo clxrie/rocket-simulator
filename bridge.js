@@ -22,6 +22,7 @@ server.on('connection', (browser) => {
   })
 
   pi.on('data', (chunk) => {
+    console.log('CHUNK:', JSON.stringify(chunk.toString()))
     buffer += chunk.toString()
     const lines = buffer.split('\n')
     buffer = lines.pop()
